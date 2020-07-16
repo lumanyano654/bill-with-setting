@@ -9,23 +9,16 @@ const warningLevelSetting = document.querySelector(".warningLevelSetting");
 const criticalLevelSetting = document.querySelector(".criticalLevelSetting");
 const updateSettings = document.querySelector(".updateSettings");
 
-var callTotal = 0;
-var smsTotal = 0;
-var total = 0;
-
-var call = 0;
-var sms = 0;
-var warning = 0 ;
-var critical = 0;
+var settingsInstance = billWithSettings()
 
 function settingValue(){
 
-   call = Number( callCostSetting.value );
-   sms = Number( smsCostSetting.value );
-   warning = Number(warningLevelSetting.value);
-   critical = Number(criticalLevelSetting.value);
+   settingsInstance.setCallCost(Number(callCostSetting.value));
+   settingsInstance.setSmsCost(Number( smsCostSetting.value ));
+  settingsInstance.setWarningLevel(Number(warningLevelSetting.value));
+   settingsInstance.setCriticalLevel(Number(criticalLevelSetting.value));
   
-   billTypeWithSettingsColor(total);
+   billTypeWithSettingsColor();
 }
 
 function billTypeWithSettings (){
@@ -35,64 +28,34 @@ function billTypeWithSettings (){
   
   var billRadio = checkedRadioBtn.value;
   
-  // if (total < critical){
-
-  
-  // if (billRadio === 'call'){
-  //   callTotal += call;
-  // }
-  
-  // else if (billRadio === 'sms'){
-  //   smsTotal += sms;
-  // }
-
-  let settingBill = billWithSettings();
-    
+ if (billRadio === 'call'){
+   settingsInstance.makeCall()
  
-//}
+   }
   
+  else if (billRadio === 'sms'){
+    settingsInstance.sendSms()
+  }
   
-  // callTotalSettings.innerHTML = callTotal.toFixed(2);
-  // smsTotalSettings.innerHTML = smsTotal.toFixed(2);
-  
-  // total = callTotal + smsTotal;
-  // if (callTotal + smsTotal < total){
-  //     return -total 
-      
-  //   }
-  // totalSettings.innerHTML = total.toFixed(2);
-
-  
+  callTotalSettings.innerHTML = settingsInstance.getTotalCallCost().toFixed(2);
+  smsTotalSettings.innerHTML = settingsInstance.getTotalSmsCost().toFixed(2);
+  totalSettings.innerHTML = settingsInstance.getTotalCost().toFixed(2)
    
-  billTypeWithSettingsColor(total);
+  billTypeWithSettingsColor();
 };
-function billTypeWithSettingsColor (totalCost){
-  
-  totalSettings.classList.remove('danger');
-  totalSettings.classList.remove('warnings');
-  //totalSettings.classList.remove('total');
-  
-  if (totalCost >= criticalLevelSetting.value){
-    totalSettings.classList.add('danger');
-  }
-  
-  else if (totalCost >= warningLevelSetting.value){
-    totalSettings.classList.add('warning');
-  }
 
-  else if (total <= warningLevelSetting.value){
-    totalSettings.classList.remove('warning');
-  }
+function billTypeWithSettingsColor (){
   
-  /*else if (totalCost < warningLevelSetting.value){
-     totalSettings.classList.add('total');
-  }*/
+  totalSettings.classList.remove('critical');
+  totalSettings.classList.remove('warning');
+  totalSettings.classList.add(settingsInstance.totalClassName());
+
 };
 
  
   radioBillAddBtn.addEventListener("click",billTypeWithSettings)
+   updateSettings.addEventListener("click",settingValue)
 
-updateSettings.addEventListener("click",settingValue)
 
 
 
