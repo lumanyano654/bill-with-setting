@@ -35,30 +35,32 @@ function billTypeWithSettings (){
   
   var billRadio = checkedRadioBtn.value;
   
-  if (total < critical){
+  // if (total < critical){
 
   
-  if (billRadio === 'call'){
-    callTotal += call;
-  }
+  // if (billRadio === 'call'){
+  //   callTotal += call;
+  // }
   
-  else if (billRadio === 'sms'){
-    smsTotal += sms;
-  }
+  // else if (billRadio === 'sms'){
+  //   smsTotal += sms;
+  // }
 
+  let settingBill = billWithSettings();
+    
  
-}
+//}
   
   
-  callTotalSettings.innerHTML = callTotal.toFixed(2);
-  smsTotalSettings.innerHTML = smsTotal.toFixed(2);
+  // callTotalSettings.innerHTML = callTotal.toFixed(2);
+  // smsTotalSettings.innerHTML = smsTotal.toFixed(2);
   
-  total = callTotal + smsTotal;
-  if (callTotal + smsTotal < total){
-      return -total 
+  // total = callTotal + smsTotal;
+  // if (callTotal + smsTotal < total){
+  //     return -total 
       
-    }
-  totalSettings.innerHTML = total.toFixed(2);
+  //   }
+  // totalSettings.innerHTML = total.toFixed(2);
 
   
    
